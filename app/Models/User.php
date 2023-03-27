@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
+use App\Notifications\ResetPasswordNotification;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -51,5 +52,15 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function sendResetLink(){
+        $this->sendPasswordResetNotification(auth()->tokenById($this->id));
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        $url = route('password.reset',[$token]);
+        $this->notify(new ResetPasswordNotification($url));
     }
 }

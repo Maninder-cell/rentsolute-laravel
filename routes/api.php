@@ -21,4 +21,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::prefix('/auth')->group(function(){
     Route::post('/register',[UserController::class,'register'])->name('auth.register');
     Route::post('/login',[UserController::class,'login'])->name('auth.login');
+    Route::post('/forgot-password',[UserController::class,'forgotPassword'])->name('auth.forgot_password');
+    Route::any('/reset-password/{token}', [UserController::class,'resetPassword'])->middleware('api')->name('password.reset');
 });

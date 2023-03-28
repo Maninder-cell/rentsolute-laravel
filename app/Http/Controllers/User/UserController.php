@@ -10,7 +10,6 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Requests\ForgotPasswordRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use PHPOpenSourceSaver\JWTAuth\Exceptions\TokenBlacklistedException;
 
 class UserController extends Controller
 {

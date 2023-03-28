@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Amenity\AmenityController;
 use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\ImageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 /*
@@ -24,3 +26,9 @@ Route::prefix('/auth')->group(function(){
     Route::post('/forgot-password',[UserController::class,'forgotPassword'])->name('auth.forgot_password');
     Route::any('/reset-password/{token}', [UserController::class,'resetPassword'])->middleware('api')->name('password.reset');
 });
+
+Route::prefix('/amenity')->group(function(){
+    Route::post('/new_amenity',[AmenityController::class,'saveAmenity'])->name('amenity.create');
+});
+
+Route::post('/save_image',[ImageController::class,'saveImage'])->name('save_image');

@@ -15,9 +15,9 @@ class AmenityController extends Controller
         $amenity = new Amenity;
         $amenity->name = $request->name;
 
-        list($filePath,$validator) = SaveFileController::saveFile($request->icon);
+        list($filePath, $validator) = SaveFileController::saveFile($request->icon);
 
-        if($filePath == false){
+        if ($filePath == false) {
             return response()->json(['errors' => $validator]);
         }
 
@@ -25,8 +25,15 @@ class AmenityController extends Controller
         $amenity->save();
 
         return response()->json([
-            'msg' => 'Amenity created sucessfully',
+            'msg' => 'Amenity created successfully',
             'data' => $amenity
         ]);
+    }
+
+    public function getAmenities(Request $request)
+    {
+        $amenities = Amenity::all();
+
+        return response()->json(['msg' => 'Amenities founds successfully', 'data' => $amenities]);
     }
 }

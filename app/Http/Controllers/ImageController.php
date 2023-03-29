@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Auth;
 
 class ImageController extends Controller
 {
-
     public function saveImage(ImageRequest $request){
         $image = new Image;
         $image->caption = $request->caption;

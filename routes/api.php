@@ -3,6 +3,7 @@
 use App\Http\Controllers\Amenity\AmenityController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\Question\QuestionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 /*
@@ -15,20 +16,21 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::prefix('/auth')->group(function(){
     Route::post('/register',[UserController::class,'register'])->name('auth.register');
     Route::post('/login',[UserController::class,'login'])->name('auth.login');
     Route::post('/forgot-password',[UserController::class,'forgotPassword'])->name('auth.forgot_password');
-    Route::any('/reset-password/{token}', [UserController::class,'resetPassword'])->middleware('api')->name('password.reset');
+    Route::any('/reset-password/{token}', [UserController::class,'resetPassword'])->name('password.reset');
 });
 
-Route::prefix('/amenity')->group(function(){
+Route::prefix('/amenity')->middleware('auth:api')->group(function(){
     Route::post('/new_amenity',[AmenityController::class,'saveAmenity'])->name('amenity.create');
+    Route::get('/get_amenities',[AmenityController::class,'getAmenities'])->name('amenity.gets');
 });
 
-Route::post('/save_image',[ImageController::class,'saveImage'])->name('save_image');
+Route::prefix('/question')->middleware('auth:api')->group(function(){
+    Route::post('/new_question',[QuestionController::class,'saveQuestion'])->name('question.create');
+    Route::get('/get_questions',[QuestionController::class,'getQuestions'])->name('question.gets');
+});
+
+Route::post('/save_image',[ImageController::class,'saveImage'])->middleware('auth:api')->name('save_image');

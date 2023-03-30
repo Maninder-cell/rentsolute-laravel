@@ -9,6 +9,8 @@ class Question extends Model
 {
     use HasFactory;
 
+    protected $hidden = ['pivot'];
+    
     public function options(){
         return $this->hasMany(Option::class,'question_id');
     }

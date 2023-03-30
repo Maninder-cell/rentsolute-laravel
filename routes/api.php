@@ -3,8 +3,8 @@
 use App\Http\Controllers\Amenity\AmenityController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\Property\PropertyController;
 use App\Http\Controllers\Question\QuestionController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +31,12 @@ Route::prefix('/amenity')->middleware('auth:api')->group(function(){
 Route::prefix('/question')->middleware('auth:api')->group(function(){
     Route::post('/new_question',[QuestionController::class,'saveQuestion'])->name('question.create');
     Route::get('/get_questions',[QuestionController::class,'getQuestions'])->name('question.gets');
+});
+
+Route::prefix('/property')->middleware('auth:api')->group(function(){
+    Route::post('/new_property',[PropertyController::class,'saveProperty'])->name('property.create');
+    Route::put('/update_property/{id}',[PropertyController::class,'updateProperty'])->name('property.update');
+    Route::delete('/delete_property/{id}',[PropertyController::class,'deleteProperty'])->name('property.delete');
 });
 
 Route::post('/save_image',[ImageController::class,'saveImage'])->middleware('auth:api')->name('save_image');

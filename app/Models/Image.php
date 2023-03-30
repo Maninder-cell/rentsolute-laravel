@@ -9,6 +9,8 @@ class Image extends Model
 {
     use HasFactory;
 
+    protected $hidden = ['pivot'];
+
     const DISK = "images";
 
     public function user(){

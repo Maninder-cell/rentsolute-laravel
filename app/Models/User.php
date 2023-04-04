@@ -54,6 +54,23 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
+    public function role()
+    {
+        return $this->belongsTo(UserRole::class, 'user_role_id');
+    }
+
+    public function hasRole($role)
+    {
+        if ($this->role()->where('name', $role)->first()) {
+            return true;
+        }
+        return false;
+    }
+
+    public function isAdmin(){
+        return $this->hasRole('admin');
+    }
+
     public function sendResetLink(){
         $this->sendPasswordResetNotification(auth()->tokenById($this->id));
     }
